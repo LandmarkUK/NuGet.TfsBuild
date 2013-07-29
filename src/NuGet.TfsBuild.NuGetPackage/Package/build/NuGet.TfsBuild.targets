@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--NuGet.TfsBuildService.props v1.0.0 - See https://github.com/LandmarkUK/NuGet.TfsBuild for more information -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="InstallPrivateNuGetRepository" Condition="$(PrivateNuGetRepository) != ''">
+    <Message Importance="High" Text="Installing private NuGet repository $(PrivateNuGetRepository)..." />
+    <Exec Command="&quot;$(NuGetExePath)&quot; sources remove -name &quot;PrivatePackageRepo&quot;" ContinueOnError="true" />
+    <Exec Command="&quot;$(NuGetExePath)&quot; sources add -name &quot;PrivatePackageRepo&quot; -source &quot;$(PrivateNuGetRepository)&quot; -UserName &quot;$(PrivateNuGetRepositoryUsername)&quot; -password &quot;$(PrivateNuGetRepositoryPassword)&quot;" />
+  </Target>
+  </Project>
+  

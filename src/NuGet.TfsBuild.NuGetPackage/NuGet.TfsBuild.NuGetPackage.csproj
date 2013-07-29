@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{592B25BB-B0B5-4DD8-9A4D-3FB5640F2A59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NuGet.TfsBuild.NuGetPackage</RootNamespace>
+    <AssemblyName>NuGet.TfsBuild.NuGetPackage</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+
+  <!-- Customise the behavior of NuGet.PackageNPublish for our purposes -->
+  <PropertyGroup>
+    <RegenerateNuSpecFiles Condition="$(RegenerateNuSpecFiles) == ''">false</RegenerateNuSpecFiles>
+    <CreateNuGetPackage Condition="$(CreateNuGetPackage) == ''">true</CreateNuGetPackage>
+    <CreateSymbolPackage Condition="$(CreateSymbolPackage) == ''">false</CreateSymbolPackage>
+    <CopyReferencedAssemblies Condition="$(PublishSymbolPackage) == ''">false</CopyReferencedAssemblies>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="NuGet.TfsBuild.NuGetPackage.nuspec" />
+    <None Include="packages.config" />
+    <None Include="Package\build\NuGet.TfsBuild.props">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Package\build\NuGet.TfsBuild.targets">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_MSBuild\NuGetPackageAndPublish.targets" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\packages\Microsoft.Web.Xdt.1.0.0\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGet.Core, Version=2.6.40619.9041, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Nuget.Core.2.6.0.1\lib\net40-Client\NuGet.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!--<Import Project="$(ProjectDir)\_MSBuild\NuGet.PackageAndPublish.targets" Condition="Exists('$(ProjectDir)\_MSBuild\NuGet.PackageAndPublish.targets')" />-->
+  <Import Project="$(ProjectDir)\_MSBuild\NuGetPackageAndPublish.targets" />
+</Project>
