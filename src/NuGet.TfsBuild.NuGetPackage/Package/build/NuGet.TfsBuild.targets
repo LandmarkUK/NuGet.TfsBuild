@@ -6,5 +6,5 @@
     <Exec Command="&quot;$(NuGetExePath)&quot; sources remove -name &quot;PrivatePackageRepo&quot;" ContinueOnError="true" />
     <Exec Command="&quot;$(NuGetExePath)&quot; sources add -name &quot;PrivatePackageRepo&quot; -source &quot;$(PrivateNuGetRepository)&quot; -UserName &quot;$(PrivateNuGetRepositoryUsername)&quot; -password &quot;$(PrivateNuGetRepositoryPassword)&quot;" />
   </Target>
-  </Project>
+</Project>
   

@@ -15,6 +15,7 @@
     <BuildDependsOn Condition="$(CreateNuGetPackage) == 'true'">
       InstallPrivateNuGetRepository;
       $(BuildDependsOn);
+    </BuildDependsOn>
   </PropertyGroup>
   
 </Project>
