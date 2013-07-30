@@ -14,7 +14,6 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-
   <!-- Customise the behavior of NuGet.PackageNPublish for our purposes -->
   <PropertyGroup>
     <RegenerateNuSpecFiles Condition="$(RegenerateNuSpecFiles) == ''">false</RegenerateNuSpecFiles>
@@ -22,7 +21,6 @@
     <CreateSymbolPackage Condition="$(CreateSymbolPackage) == ''">false</CreateSymbolPackage>
     <CopyReferencedAssemblies Condition="$(PublishSymbolPackage) == ''">false</CopyReferencedAssemblies>
   </PropertyGroup>
-  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -49,12 +47,11 @@
     <None Include="app.config" />
     <None Include="NuGet.TfsBuild.NuGetPackage.nuspec" />
     <None Include="packages.config" />
-    <None Include="Package\build\NuGet.TfsBuild.props">
+    <None Include="Package\content\_MSBuild\NuGet.TfsBuild.targets">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Package\build\NuGet.TfsBuild.targets">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Package\tools\install.ps1" />
+    <None Include="Package\tools\uninstall.ps1" />
     <None Include="_MSBuild\NuGetPackageAndPublish.targets" />
   </ItemGroup>
   <ItemGroup />

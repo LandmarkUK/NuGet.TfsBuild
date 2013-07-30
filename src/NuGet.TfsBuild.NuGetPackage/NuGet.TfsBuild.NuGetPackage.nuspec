@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NuGet.TfsBuild</id>
-    <version>1.0.0-alpha-2</version>
+    <version>1.0.0</version>
     <authors>Brendan Alderslade, Joel Hammond-Turner</authors>
     <description>NuGet.TfsBuild allows the TFS Build service to perform package-restore from a private, password protected repository.</description>
     <language>en-US</language>
