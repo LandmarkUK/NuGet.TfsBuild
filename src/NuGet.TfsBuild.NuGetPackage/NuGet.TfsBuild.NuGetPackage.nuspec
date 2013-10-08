@@ -7,7 +7,6 @@
     <description>NuGet.TfsBuild allows the TFS Build service to perform package-restore from a private, password protected repository.</description>
     <language>en-US</language>
     <projectUrl>https://github.com/LandmarkUK/NuGet.TfsBuild</projectUrl>
-    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
-    
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>    
   </metadata>
 </package>
