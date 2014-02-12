@@ -1,10 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>NuGet.TfsBuild</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <authors>Brendan Alderslade, Joel Hammond-Turner</authors>
-    <description>NuGet.TfsBuild allows the TFS Build service to perform package-restore from a private, password protected repository.</description>
+    <description>
+      NuGet.TfsBuild allows the TFS Build service to perform package-restore from a private, password protected repository.
+      As a bonus, in v1.1 you can configure NuGet to use a proxy if required.
+    </description>
     <language>en-US</language>
     <projectUrl>https://github.com/LandmarkUK/NuGet.TfsBuild</projectUrl>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>    
