@@ -1,17 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!--NuGet.TfsBuildService.props v1.0.0 - See https://github.com/LandmarkUK/NuGet.TfsBuild for more information -->
+<?xml version="1.0" encoding="utf-8" ?>
+<!--NuGet.TfsBuildService.props v1.1.0 - See https://github.com/LandmarkUK/NuGet.TfsBuild for more information -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
   <PropertyGroup>
     <NuGetToolsPath Condition="$(NuGetToolsPath) == '' Or $(NuGetToolsPath) == '*Undefined*'">$([System.IO.Path]::Combine($(SolutionDir), ".nuget"))</NuGetToolsPath>
     <NuGetExePath Condition="$(NuGetExePath) == '' Or $(NuGetExePath) == '*Undefined*'">$(NuGetToolsPath)\nuget.exe</NuGetExePath>
   </PropertyGroup>
+
+  <Target Name="ConfigureNuGetForTfsBuild" DependsOnTargets="ConfigurePrivateNuGetRepository;ConfigureNuGetProxy" 
+          BeforeTargets="_CheckForInvalidConfigurationAndPlatform">
+    <Message Importance="normal" Text="Configured NuGet for TFS Build environment..." />
+    <Message Importance="low" Text="RestorePackages=$(RestorePackages)" />
+    <Message Importance="low" Text="NuGetExePath=$(NuGetExePath)" />
+    <Message Importance="low" Text="ConfigFile=$(NuGetToolsPath)\NuGet.config" />
+    <Message Importance="low" Text="NuGetHttpProxy=$(NuGetHttpProxy) : NuGetHttpProxyUser=$(NuGetHttpProxy)" />
+    <Message Importance="low" Text="PrivateNuGetRepository=$(PrivateNuGetRepository) : PrivateNuGetRepositoryUsername=$(PrivateNuGetRepositoryUsername)" />
+  </Target>
+
+  <Target Name="MakeNuGetConfigWritable" >
+    <Exec ContinueOnError="true" Command="attrib -r &quot;$(NuGetToolsPath)\NuGet.config&quot;" />
+  </Target>
   
-  <Target Name="ConfigurePrivateNuGetRepository" BeforeTargets="_CheckForInvalidConfigurationAndPlatform" Condition="($(RestorePackages) == 'true') and ($(PrivateNuGetRepository) != '') and ($(PrivateNuGetRepositoryUsername) != '') and ($(PrivateNuGetRepositoryPassword) != '')">
+  <Target Name="ConfigureNuGetProxy" Condition="($(RestorePackages) == 'true') and ($(NuGetHttpProxy) != '')" DependsOnTargets="MakeNuGetConfigWritable">
+    <Message Importance="High" Text="Configuring NuGet to use HttpProxy $(NuGetHttpProxy)..." />
+    <Exec Command="&quot;$(NuGetExePath)&quot; config -set HTTP_PROXY=$(NuGetHttpProxy) -configfile &quot;$(NuGetToolsPath)\NuGet.config&quot;" 
+          ContinueOnError="true" Condition="($(NuGetHttpProxyUser) == '')" />
+    <Exec Command="&quot;$(NuGetExePath)&quot; config -set HTTP_PROXY=$(NuGetHttpProxy) -Set HTTP_PROXY.USER=$(NuGetHttpProxyUser) -configfile &quot;$(NuGetToolsPath)\NuGet.config&quot;" 
+          ContinueOnError="true" Condition="($(NuGetHttpProxyUser) != '')" />
+  </Target>
+  
+  <Target Name="ConfigurePrivateNuGetRepository" Condition="($(RestorePackages) == 'true') and ($(PrivateNuGetRepository) != '')" DependsOnTargets="MakeNuGetConfigWritable">
     <Message Importance="High" Text="Installing private NuGet repository $(PrivateNuGetRepository)..." />
-    <Exec ContinueOnError="true" Command="attrib -r &quot;$(NuGetToolsPath)\NuGet.config" />
-    <Exec Command="&quot;$(NuGetExePath)&quot; sources remove -name &quot;PrivatePackageRepo&quot; -configfile &quot;$(NuGetToolsPath)\NuGet.config" ContinueOnError="true" />
-    <Exec Command="&quot;$(NuGetExePath)&quot; sources add -name &quot;PrivatePackageRepo&quot; -source &quot;$(PrivateNuGetRepository)&quot; -UserName &quot;$(PrivateNuGetRepositoryUsername)&quot; -password &quot;$(PrivateNuGetRepositoryPassword)&quot; -configfile &quot;$(NuGetToolsPath)\NuGet.config" />
+    <Exec Command="&quot;$(NuGetExePath)&quot; sources remove -name &quot;PrivatePackageRepo&quot; -configfile &quot;$(NuGetToolsPath)\NuGet.config&quot;" 
+          IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true" ContinueOnError="true" />
+    <Exec Command="&quot;$(NuGetExePath)&quot; sources add -name &quot;PrivatePackageRepo&quot; -source &quot;$(PrivateNuGetRepository)&quot; -configfile &quot;$(NuGetToolsPath)\NuGet.config&quot;"
+          Condition="($(PrivateNuGetRepositoryUsername) == '') and ($(PrivateNuGetRepositoryPassword) == '')" />
+    <Exec Command="&quot;$(NuGetExePath)&quot; sources add -name &quot;PrivatePackageRepo&quot; -source &quot;$(PrivateNuGetRepository)&quot; -UserName &quot;$(PrivateNuGetRepositoryUsername)&quot; -password &quot;$(PrivateNuGetRepositoryPassword)&quot; -configfile &quot;$(NuGetToolsPath)\NuGet.config&quot;"
+          Condition="($(PrivateNuGetRepositoryUsername) != '') and ($(PrivateNuGetRepositoryPassword) != '')" />
   </Target>
 </Project>
-  
