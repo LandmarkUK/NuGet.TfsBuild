@@ -2,6 +2,7 @@ NuGet.TfsBuild
 ==============
 
 NuGet.TfsBuild allows the TFS Build service to perform package-restore from a private, password protected repository.
+As a bonus, in v1.1 you can configure NuGet to use a proxy if required.
 
 It works by injecting a new package source into the NuGet.config file installed when you enable package-restore, with settings defined by MSBuild parameters.
 
@@ -13,9 +14,13 @@ It works by injecting a new package source into the NuGet.config file installed 
 - Set up a TfsBuildService build definition
 - In the Advanced section of the Build Process tab, add the following (substituting values as appropriate)
 
+```
 /p:PrivateNuGetRepository={path to my private repo feed}
 /p:PrivateNuGetRepositoryUsername={my build user username}
 /p:PrivateNuGetRepositoryPassword{my build user password}
+/p:NuGetHttpProxy=http://{myproxyurl}:{port}
+/p:NuGetHttpProxyUser={myProxyUser}
+```
 
 - Build under Tfs Build service and enjoy seeing package restore pull your packages from your secure private package repository.
 
@@ -25,4 +30,5 @@ Fork it... Fix it... Raise Issues... Generate Pull requests... Use it!
 
 ## Thanks
 
-Thanks have to go to my company, Landmark Information Group ( http://www.landmark.co.uk / http://twitter.com/LandmarkUK ) for allowing this project to be open sourced under the Apache 2.0 license.
+Thanks have to go to my company, Landmark Information Group ( http://www.landmark.co.uk / http://twitter.com/LandmarkUK ) 
+for allowing this project to be open sourced under the Apache 2.0 license.
